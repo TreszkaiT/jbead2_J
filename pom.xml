@@ -17,40 +17,200 @@
         <java.version>20</java.version>
     </properties>
     <dependencies>
+        <!-- Database depencencies-->
+        <!-- a Spring perzisztencia miatt (adatbázisba automatikusan rakja be így) :	for using Spring Data JPA with Hibernate-->
+        <!-- SPRING BOOT  - SPRING DATA JPA: az adatbázis műveletekhez kell-->
+        <!-- Persist data in SQL stores with Java Persistence API using Spring Data and Hibernate.-->
+        <!--	Kereséshez az adatbázisban: JpaSpecificationExecutor<Person> iterfacehoz	-->
+        <!--        // DB miatt -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+        <!-- loginform biztonságos belépés miatt. Spring Security függőség -->
+        <!-- Highly customizable authentication and access-control framework for Spring applications.-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-security</artifactId>-->
+        <!--        </dependency>-->
+        <!--        &lt;!&ndash;		configurálása miatt&ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.security</groupId>-->
+        <!--            <artifactId>spring-security-config</artifactId>-->
+        <!--        </dependency>-->
+        <!-- Web depencencies-->
+        <!--	Webes alkalmazás fejlesztése miatt : Starter for building web, including RESTful, applications using Spring MVC. Uses Tomcat as the default embedded container -->
+        <!-- Build web, RESTful, applications using Spring MVC. Uses Apache Tomcat as the default embedded container.-->
+        <!--	@RestController anotációhoz is kell	-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
+        <!-- Kódfrissítő mentésnél depencencies-->
+        <!-- devtools: IDE-ben a project változtatásakor Ctrl+S-t nyomva újrafrissíti/generálja a kódot / mindig az IDE-t, e nélkül nem tenné, mindig újra kéne kattintani a Run gombra -->
+        <!-- felismeri, hogy fejlesztői környezetben vagyok, és ún. Produkciós környezetben nem fogja újraindítani -->
+        <!-- Provides fast application restarts, LiveReload, and configurations for enhanced development experience-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
+        <!-- DATABASE h2 driver In-Memory adatbázis legyen: kevés konfiguráció hozzá az application.yml-ben van-->
+        <!-- DATABASE H2 (Hypersonic) driver In-Memory adatbázis legyen: kevés konfiguráció hozzá az application.yml-ben van-->
+        <!-- Spring Boot integration for Spring Security"s OAuth2/OpenID Connect client features.-->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <!--         MariaDB függőség -->
+        <!-- MariaDB JDBC and R2DBC driver.-->
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- SWAGGER-UI : DOCUMENTATION ez ad egy webes felületet nekünk, melyen fel tudjuk fedezni az egyes endpointokat. http://localhost:8080/swagger-ui/index.html-->
+        <!--        For spring-boot 3  use springdoc-openapi v2-->
+        <!--        springdoc.swagger-ui.path=/swagger-ui.html -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+        <!--        Spring Boot 3 alatt ezt használjuk-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springdoc</groupId>-->
+        <!--            <artifactId>springdoc-openapi-ui</artifactId>-->
+        <!--            <version>1.6.14</version>-->
+        <!--        </dependency>-->
+
+        <!-- application.properties használata miatt-->
+        <!-- Generate metadata for developers to offer contextual help and "code completion" when working with custom configuration keys (ex.application.properties/.yml files)-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
+
+        <!--	Entity dependency-k	-->
+        <!--	A Getterek/Setterek beállítására jó	-->
+        <!-- Java annotation library which helps to reduce boilerplate code.-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+        <!--		Audited miatt: hogy minden Entity elmentse magát mindig az adatbázisba minden műveletnél-->
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-envers</artifactId>
+            <version>6.1.6.Final</version>
+        </dependency>
+        <!--        Ez a hibernate-envers már régi volt, és org.hibernate helyett org.hibernate.orm-ot kell használni-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.hibernate</groupId>-->
+        <!--            <artifactId>hibernate-envers</artifactId>-->
+        <!--            <version>6.1.3.Final</version>-->
+        <!--        </dependency>-->
+        <!--		validation: adatok validálására  -->
+        <!-- Bean Validation with Hibernate validator-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <!--		Entity-kben a javax.persistence.Id;  Annotációk miatt-->
+        <!--        JAKARTA hibát okoz, ha beleteszem itt, de ezt kell használni amúgy !!! -->
+        <!--        <dependency>-->
+        <!--            <groupId>jakarta.persistence</groupId>-->
+        <!--            <artifactId>jakarta.persistence-api</artifactId>-->
+        <!--            <version>2.2.3</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>jakarta.validation</groupId>-->
+        <!--            <artifactId>jakarta.validation-api</artifactId>-->
+        <!--        </dependency>-->
+        <!--        javax: nem ezt kell használni az Entitásoknál, mert az alábbi hibát dobja: Not a managed type:repository -->
+        <!--        <dependency>-->
+        <!--            <groupId>javax.persistence</groupId>-->
+        <!--            <artifactId>javax.persistence-api</artifactId>-->
+        <!--            <version>2.2</version>-->
+        <!--        </dependency>-->
+
+
+
+
+        <!--		test: adatok tesztelésére  -->
+        <!--	Integrációs teszt: src/test -ben a ClassPath-on. A Service réteg Business logikáját lehet vele tesztelni. Nagoyn gyors!!!	-->
+        <!--	Ha befejezi a tesztet, kilép, így application.properties-ben create-drop helyett csak create legyen, hogy DB-t ne dobja el, és lássuk mi került a DB-be	-->
+        <!--        Test package-ban a test fájlokban a Jupiter api-hoz is kell-->
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-test</artifactId>
+                    <scope>test</scope>
+                </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.security</groupId>-->
+        <!--            <artifactId>spring-security-test</artifactId>-->
+        <!--            <scope>test</scope>-->
+        <!--        </dependency>-->
+
+        <!-- UTIL    modelmapper: automatikusan tud konvertálni egyik osztályból a másikba-->
+        <!--	POJO -ból  Entity és vissza alakító	-->
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
+        <!-- jar fájlt készít a projectből: Builds a Java Archive (JAR) file from the compiled project classes and resources. -->
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <version>3.3.0</version>
+        </dependency>
+        <!--	A project összes függőségét összecsomagolja a .jar-ba  :A Maven plugin to create archives of your project's sources, classes, dependencies etc. from flexible assembly descriptors.	-->
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <version>3.4.2</version>
+        </dependency>
+        <!-- a project függőségeti manageljük : Provides utility goals to work with dependencies like copying, unpacking, analyzing, resolving and many more.-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.maven.plugins</groupId>-->
+        <!--            <artifactId>maven-dependency-plugin</artifactId>-->
+        <!--            <version>3.5.0</version>-->
+        <!--        </dependency>-->
+
+        <!--JetBrain IntelliJ dependencies-->
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>24.0.0</version>
+        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.jetbrains</groupId>-->
+        <!--            <artifactId>annotations</artifactId>-->
+        <!--            <version>RELEASE</version>-->
+        <!--            <scope>compile</scope>-->
+        <!--        </dependency>-->
+
+        <!--		logoláshoz -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.7</version>
         </dependency>
     </dependencies>
 
