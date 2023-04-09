@@ -1,4 +1,4 @@
-package com.tt.jbead.login.repositories;
+package com.tt.jbead.repositories;
 
 import com.tt.jbead.domain.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;

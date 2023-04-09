@@ -2,12 +2,15 @@ package com.tt.jbead.services.impl;
 
 import com.tt.jbead.domain.dtos.UserDTO;
 import com.tt.jbead.domain.entities.User;
-import com.tt.jbead.login.repositories.UserRepository;
+import com.tt.jbead.exceptions.NotFoundExceptionUser;
+import com.tt.jbead.repositories.UserRepository;
 import com.tt.jbead.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -40,6 +43,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<UserDTO> findAll(){
+        List<User> userList = userRepository.findAll();
+
+        return userList.stream()
+                .map(user -> modelMapper.map(user, UserDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public UserDTO CreateUser(UserDTO userDTO) {
         Optional<User> optionalUser = userRepository.findByEmail(userDTO.getEmail());
         if(!optionalUser.isEmpty()){
@@ -50,4 +62,32 @@ public class UserServiceImpl implements UserService {
         User savedUser = userRepository.save(userToSave);
         return modelMapper.map(userToSave, UserDTO.class);
     }
+
+    @Override
+    public UserDTO update(UserDTO userDTO) {
+        Integer id = userDTO.getId();
+        Optional<User> optionalUser = userRepository.findById(id);
+
+        if(optionalUser.isEmpty()){
+            throw new NotFoundExceptionUser("User not found in database with id= "+id);
+        }
+
+        User userToUpdate = modelMapper.map(userDTO, User.class);
+        User savedUser = userRepository.save(userToUpdate);
+        return modelMapper.map(savedUser, userDTO.getClass());
+    }
+
+    @Override
+    public void delete(Integer id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+
+        if(optionalUser.isEmpty()){
+            throw new NotFoundExceptionUser("User not found in database with id= "+id);
+        }
+
+        User userToDelete = optionalUser.get();
+        userRepository.delete(userToDelete);
+    }
+
+
 }
