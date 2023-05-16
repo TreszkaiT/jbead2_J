@@ -58,6 +58,9 @@ public class User {
     @Column(name = "PERS_COVERLETTER", columnDefinition = "TEXT")
     private String coverLetter;
 
+    @Column(name = "PERS_CONFIG_UI")
+    private String theme;
+
 
     // Enums
     @Enumerated(value = EnumType.ORDINAL)

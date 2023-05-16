@@ -35,6 +35,8 @@ public class UserDTO {
 
     private String coverLetter;
 
+    private String theme;
+
 
     // Enums
     private Gender gender;

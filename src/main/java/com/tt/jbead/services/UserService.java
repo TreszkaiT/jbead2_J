@@ -4,6 +4,7 @@ import com.tt.jbead.domain.dtos.UserDTO;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Spliterator;
 
 public interface UserService {
 

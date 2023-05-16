@@ -30,7 +30,7 @@ public class DatabaseConfiguration {
         Language language = Language.builder().name("Magyar").code("HUN").build();
         languageRepository.save(language);
 
-        User user = User.builder().id(1).email("kiss.geza@company.com").password("a").firstName("Kiss Géza").build();
+        User user = User.builder().id(1).email("kiss.geza@company.com").password("a").firstName("Kiss Géza").theme("kb-dark-theme").build();
         userRepository.save(user);
     }
 }
