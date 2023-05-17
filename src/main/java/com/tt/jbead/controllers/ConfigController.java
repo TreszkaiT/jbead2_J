@@ -1,14 +1,20 @@
 package com.tt.jbead.controllers;
 
 import com.tt.jbead.domain.dtos.ConfigDTO;
+import com.tt.jbead.exceptions.InvalidEntityException;
 import com.tt.jbead.services.ConfigService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.javapoet.ClassName;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -37,12 +43,26 @@ public class ConfigController {
         } else {
             response = ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        System.out.println("kész");
+
+        return response;
+    }
+
+    @RequestMapping(method = RequestMethod.PATCH, produces = "application/json")
+    public ResponseEntity<ConfigDTO> updatedById(@RequestBody @Valid ConfigDTO configDTO, BindingResult bindingResult){
+        Optional<ConfigDTO> optionalConfigDTO = configService.updateByUserId(configDTO);
+
+        ResponseEntity<ConfigDTO> response;
+        if(optionalConfigDTO.isPresent()){
+            response = ResponseEntity.ok(optionalConfigDTO.get());
+        } else {
+            response = ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
         return response;
     }
 
 //    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-//    public ResponseEntity<ConfigDTO> create(@RequestBody @Valid ConfigDTO ConfigDTO, BindingResult bindingResult){
+//    public ResponseEntity<ConfigDTO> create(@RequestBody @Valid ConfigDTO configDTO, BindingResult bindingResult){
 //        checkErrors(bindingResult);
 //
 //        ConfigDTO updateCity = cityService.update(ConfigDTO);
@@ -55,18 +75,18 @@ public class ConfigController {
 //        return ResponseEntity.noContent().build();
 //    }
 //
-//    private void checkErrors(BindingResult bindingResult){
-//        LOGGER.info("bindigResult has errors = {}", bindingResult.hasErrors());
-//        LOGGER.info("erors = {}", bindingResult.getAllErrors());
-//
-//        if(bindingResult.hasErrors()){
-//            List<String> messages = new ArrayList<>();
-//
-//            for(FieldError fieldError : bindingResult.getFieldErrors()){
-//                messages.add(fieldError.getField() + " - " + fieldError.getDefaultMessage());
-//            }
-//
-//            throw new InvalidEntityException("Invalid city", messages);
-//        }
-//    }
+    private void checkErrors(BindingResult bindingResult){
+        LOGGER.info("bindigResult has errors = {}", bindingResult.hasErrors());
+        LOGGER.info("erors = {}", bindingResult.getAllErrors());
+
+        if(bindingResult.hasErrors()){
+            List<String> messages = new ArrayList<>();
+
+            for(FieldError fieldError : bindingResult.getFieldErrors()){
+                messages.add(fieldError.getField() + " - " + fieldError.getDefaultMessage());
+            }
+
+            throw new InvalidEntityException("Invalid config", messages);
+        }
+    }
 }

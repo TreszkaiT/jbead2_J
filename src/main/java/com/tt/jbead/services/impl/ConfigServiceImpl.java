@@ -4,6 +4,8 @@ import com.tt.jbead.domain.dtos.ConfigDTO;
 import com.tt.jbead.domain.entities.User;
 import com.tt.jbead.repositories.UserRepository;
 import com.tt.jbead.services.ConfigService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -22,12 +24,35 @@ public class ConfigServiceImpl implements ConfigService {
     @Override
     public Optional<ConfigDTO> findByUserId(Integer userId) {
         Optional<User> optionalUser = userRepository.findById(userId);
-        User user = optionalUser.get();
+        //User user = optionalUser.get();
+        User user = new User();
 
         ConfigDTO configDTO = new ConfigDTO();
-        return  Optional.of(configDTO.builder().id(user.getId()).theme(user.getTheme()).build());
+        if(optionalUser.isPresent()){
+            user = optionalUser.get();
 
+            return  Optional.of(configDTO.builder().id(user.getId()).theme(user.getTheme()).build());
+        } else {
+            //error;
+            return  Optional.of(configDTO);
+        }
         //return optionalCity.map(city -> modelMapper.map(city, CityDTO.class));
+    }
+
+    @Override
+    public Optional<ConfigDTO> updateByUserId(ConfigDTO configDTO){
+        Optional<User> optionalUser = userRepository.findById(configDTO.getId());
+        //User user = optionalUser.get();
+        User user = new User();
+
+        if(optionalUser.isPresent()){
+            user = optionalUser.get();
+            user.setTheme(configDTO.getTheme());
+            userRepository.save(user);
+        } else {
+            //error;
+        }
+        return Optional.of(configDTO);
     }
 
 //    @Override

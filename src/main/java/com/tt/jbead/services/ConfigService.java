@@ -8,6 +8,8 @@ public interface ConfigService {
 
     Optional<ConfigDTO> findByUserId(Integer userId);
 
+    Optional<ConfigDTO> updateByUserId(ConfigDTO configDTO);
+
 //    CityDTO create(CityDTO cityDTO);
 //
 //    CityDTO update(CityDTO cityDTO);
