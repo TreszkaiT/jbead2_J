@@ -47,7 +47,7 @@ public class ConfigController {
         return response;
     }
 
-    @RequestMapping(method = RequestMethod.PATCH, produces = "application/json")
+    @RequestMapping(method = RequestMethod.PUT, produces = "application/json")
     public ResponseEntity<ConfigDTO> updatedById(@RequestBody @Valid ConfigDTO configDTO, BindingResult bindingResult){
         Optional<ConfigDTO> optionalConfigDTO = configService.updateByUserId(configDTO);
 

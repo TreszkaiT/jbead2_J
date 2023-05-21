@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "https://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "/city")
 public class CityController {
 
@@ -31,7 +31,8 @@ public class CityController {
     }
 
     @RequestMapping(path = "/all", method = RequestMethod.GET, produces = "applications/json")
-    public ResponseEntity<List<CityDTO>> findAll() { return ResponseEntity.ok(cityService.findAll());}
+    public ResponseEntity<List<CityDTO>> findAll() {
+        System.out.println("getCity");return ResponseEntity.ok(cityService.findAll());}
 
     @RequestMapping(path = "{id}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<CityDTO> findById(@PathVariable(name = "id") Integer identifier){
@@ -51,8 +52,17 @@ public class CityController {
     public ResponseEntity<CityDTO> create(@RequestBody @Valid CityDTO cityDTO, BindingResult bindingResult){
         checkErrors(bindingResult);
 
-        CityDTO updateCity = cityService.update(cityDTO);
+        CityDTO updateCity = cityService.create(cityDTO);
         return ResponseEntity.ok(updateCity);
+    }
+
+    // frissítés id alapján
+    @RequestMapping(method = RequestMethod.PUT)
+    public ResponseEntity<CityDTO> update(@RequestBody @Valid CityDTO cityDTO, BindingResult bindingResult){                     // @RequestBody MovieDTO movieDTO:  a Request Body-ban várja az infót
+        checkErrors(bindingResult);                                                             // alul alapmetódust írunk a validációs hibák lekezelésére
+
+        CityDTO updatedMovie = cityService.update(cityDTO);
+        return ResponseEntity.ok(updatedMovie);                                                 // 200-as hiba
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
