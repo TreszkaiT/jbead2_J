@@ -39,7 +39,8 @@ public class UserServiceImpl implements UserService {
         if(optionalUser.isEmpty()){
             return Optional.empty();
         }
-        return Optional.of(modelMapper.map(optionalUser, UserDTO.class));
+        //return Optional.of(modelMapper.map(optionalUser, UserDTO.class));
+        return optionalUser.map(user -> modelMapper.map(user, UserDTO.class));
     }
 
     @Override

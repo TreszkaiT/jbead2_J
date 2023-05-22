@@ -36,6 +36,7 @@ public class CityServiceImpl implements CityService {
     @Override
     public Optional<CityDTO> findById(Integer id) {
         Optional<City> optionalCity = cityRepository.findById(id);
+        //return optionalCity.map(city -> modelMapper.map(city, CityDTO.class));
         return optionalCity.map(city -> modelMapper.map(city, CityDTO.class));
     }
 
