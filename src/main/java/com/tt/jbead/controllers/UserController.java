@@ -1,5 +1,6 @@
 package com.tt.jbead.controllers;
 
+import com.tt.jbead.domain.dtos.CityDTO;
 import com.tt.jbead.domain.dtos.UserDTO;
 import com.tt.jbead.exceptions.InvalidEntityException;
 import com.tt.jbead.services.UserService;
@@ -57,9 +58,13 @@ public class UserController {
     }
 
 
-    @RequestMapping(path = "/all", method = RequestMethod.GET, produces = "applications/json")
+    @RequestMapping(path = "/all", method = RequestMethod.GET, produces = "application/json")                          // , produces = "applications/json"
     public ResponseEntity<List<UserDTO>> findAll() {
-        System.out.println("getUser");return ResponseEntity.ok(userService.findAll());}
+        //System.out.println("getUser");return ResponseEntity.ok(userService.findAll());
+        List<UserDTO> users = userService.findAll();
+
+        return ResponseEntity.ok().body(users);
+    }
 
     @RequestMapping(path = "{id}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<UserDTO> findById(@PathVariable(name = "id") Integer identifier){

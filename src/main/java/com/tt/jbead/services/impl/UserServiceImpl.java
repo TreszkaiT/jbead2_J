@@ -1,5 +1,6 @@
 package com.tt.jbead.services.impl;
 
+import com.tt.jbead.domain.dtos.CityDTO;
 import com.tt.jbead.domain.dtos.UserDTO;
 import com.tt.jbead.domain.entities.User;
 import com.tt.jbead.exceptions.NotFoundExceptionUser;
@@ -45,9 +46,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> findAll(){
-        List<User> userList = userRepository.findAll();
+//        List<User> userList = userRepository.findAll();
+//
+//        return userList.stream()
+//                .map(user -> modelMapper.map(user, UserDTO.class))
+//                .collect(Collectors.toList());
 
-        return userList.stream()
+        return userRepository.findAll()
+                .stream()
                 .map(user -> modelMapper.map(user, UserDTO.class))
                 .collect(Collectors.toList());
     }

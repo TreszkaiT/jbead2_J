@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.javapoet.ClassName;
 import org.springframework.validation.BindingResult;
@@ -30,9 +31,13 @@ public class CityController {
         this.cityService = cityService;
     }
 
-    @RequestMapping(path = "/all", method = RequestMethod.GET, produces = "applications/json")
+    @RequestMapping(path = "/all", method = RequestMethod.GET, produces = "application/json")                      // produces = "applications/json", consumes = "applications/json" ... produces = MediaType.APPLICATION_JSON_VALUE
     public ResponseEntity<List<CityDTO>> findAll() {
-        System.out.println("getCity");return ResponseEntity.ok(cityService.findAll());}
+        //System.out.println("getCity");return ResponseEntity.ok(cityService.findAll());
+        List<CityDTO> cities = cityService.findAll();
+        //System.out.println("getCity"+cities);
+        return ResponseEntity.ok().body(cities);
+    }
 
     @RequestMapping(path = "{id}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<CityDTO> findById(@PathVariable(name = "id") Integer identifier){
@@ -42,7 +47,7 @@ public class CityController {
         if(optionalCityDTO.isPresent()){
             response = ResponseEntity.ok(optionalCityDTO.get());
         } else {
-            response = ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            response = ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);              // return ResponseEntity.notFound().build();
         }
 
         return response;
