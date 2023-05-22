@@ -35,7 +35,7 @@ public class LanguageController {
     public ResponseEntity<List<LanguageDTO>> findAll() {return ResponseEntity.ok(languageService.findAll());}               // ResponseEntity : a HTTP válaszon tudunk módosítani vele. 200,201... úgy hogy a LanguageDTO-t becsomagoljuk ebbe a ResponseEntity generikus osztályba; HTTP headereket is bele tudunk még e mellett pakolni   ;;;
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<LanguageDTO> create(@RequestBody @Valid LanguageDTO languageDTO, BindingResult bindingResult) {     // @Valid a MovieDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
+    public ResponseEntity<LanguageDTO> create(@RequestBody @Valid LanguageDTO languageDTO, BindingResult bindingResult) {     // @Valid a LanguageDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
         checkErrors(bindingResult);
 
         LanguageDTO saveLanguage = languageService.create(languageDTO);

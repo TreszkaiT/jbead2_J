@@ -1,6 +1,5 @@
 package com.tt.jbead.controllers;
 
-import com.tt.jbead.domain.dtos.CityDTO;
 import com.tt.jbead.domain.dtos.UserDTO;
 import com.tt.jbead.exceptions.InvalidEntityException;
 import com.tt.jbead.services.UserService;
@@ -80,17 +79,17 @@ public class UserController {
     public ResponseEntity<UserDTO> create(@RequestBody @Valid UserDTO userDTO, BindingResult bindingResult){
         checkErrors(bindingResult);
 
-        UserDTO updateCity = userService.create(userDTO);
-        return ResponseEntity.ok(updateCity);
+        UserDTO updateUser = userService.create(userDTO);
+        return ResponseEntity.ok(updateUser);
     }
 
     // frissítés id alapján
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity<UserDTO> update(@RequestBody @Valid UserDTO userDTO, BindingResult bindingResult){                     // @RequestBody MovieDTO movieDTO:  a Request Body-ban várja az infót
+    public ResponseEntity<UserDTO> update(@RequestBody @Valid UserDTO userDTO, BindingResult bindingResult){                     // @RequestBody MovieDTO userDTO:  a Request Body-ban várja az infót
         checkErrors(bindingResult);                                                             // alul alapmetódust írunk a validációs hibák lekezelésére
 
-        UserDTO updatedMovie = userService.update(userDTO);
-        return ResponseEntity.ok(updatedMovie);                                                 // 200-as hiba
+        UserDTO updatedUser = userService.update(userDTO);
+        return ResponseEntity.ok(updatedUser);                                                 // 200-as hiba
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)

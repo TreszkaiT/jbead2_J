@@ -36,7 +36,7 @@ public class MessageAppController {
     public ResponseEntity<List<MessageAppDTO>> findAll() {return ResponseEntity.ok(messageAppService.findAll());}               // ResponseEntity : a HTTP válaszon tudunk módosítani vele. 200,201... úgy hogy a MessageAppDTO-t becsomagoljuk ebbe a ResponseEntity generikus osztályba; HTTP headereket is bele tudunk még e mellett pakolni   ;;;
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<MessageAppDTO> create(@RequestBody @Valid MessageAppDTO messageAppDTO, BindingResult bindingResult) {     // @Valid a MovieDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
+    public ResponseEntity<MessageAppDTO> create(@RequestBody @Valid MessageAppDTO messageAppDTO, BindingResult bindingResult) {     // @Valid a MessageAppDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
         checkErrors(bindingResult);
 
         MessageAppDTO saveMessageApp = messageAppService.create(messageAppDTO);

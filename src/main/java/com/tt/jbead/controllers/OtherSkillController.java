@@ -36,7 +36,7 @@ public class OtherSkillController {
     public ResponseEntity<List<OtherSkillDTO>> findAll() {return ResponseEntity.ok(otherSkillService.findAll());}               // ResponseEntity : a HTTP válaszon tudunk módosítani vele. 200,201... úgy hogy a OtherSkillDTO-t becsomagoljuk ebbe a ResponseEntity generikus osztályba; HTTP headereket is bele tudunk még e mellett pakolni   ;;;
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<OtherSkillDTO> create(@RequestBody @Valid OtherSkillDTO otherSkillDTO, BindingResult bindingResult) {     // @Valid a MovieDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
+    public ResponseEntity<OtherSkillDTO> create(@RequestBody @Valid OtherSkillDTO otherSkillDTO, BindingResult bindingResult) {     // @Valid a OtherSkilleDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
         checkErrors(bindingResult);
 
         OtherSkillDTO saveOtherSkill = otherSkillService.create(otherSkillDTO);

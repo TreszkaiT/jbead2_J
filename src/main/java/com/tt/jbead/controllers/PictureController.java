@@ -36,7 +36,7 @@ public class PictureController {
     public ResponseEntity<List<PictureDTO>> findAll() {return ResponseEntity.ok(pictureService.findAll());}               // ResponseEntity : a HTTP válaszon tudunk módosítani vele. 200,201... úgy hogy a PictureDTO-t becsomagoljuk ebbe a ResponseEntity generikus osztályba; HTTP headereket is bele tudunk még e mellett pakolni   ;;;
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<PictureDTO> create(@RequestBody @Valid PictureDTO pictureDTO, BindingResult bindingResult) {     // @Valid a MovieDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
+    public ResponseEntity<PictureDTO> create(@RequestBody @Valid PictureDTO pictureDTO, BindingResult bindingResult) {     // @Valid a PictureDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
         checkErrors(bindingResult);
 
         PictureDTO savePicture = pictureService.create(pictureDTO);

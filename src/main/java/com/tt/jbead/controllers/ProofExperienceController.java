@@ -36,7 +36,7 @@ public class ProofExperienceController {
     public ResponseEntity<List<ProofExperienceDTO>> findAll() {return ResponseEntity.ok(proofExperienceService.findAll());}               // ResponseEntity : a HTTP válaszon tudunk módosítani vele. 200,201... úgy hogy a ProofExperienceDTO-t becsomagoljuk ebbe a ResponseEntity generikus osztályba; HTTP headereket is bele tudunk még e mellett pakolni   ;;;
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<ProofExperienceDTO> create(@RequestBody @Valid ProofExperienceDTO proofExperienceDTO, BindingResult bindingResult) {     // @Valid a MovieDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
+    public ResponseEntity<ProofExperienceDTO> create(@RequestBody @Valid ProofExperienceDTO proofExperienceDTO, BindingResult bindingResult) {     // @Valid a ProofExperienceDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
         checkErrors(bindingResult);
 
         ProofExperienceDTO saveProofExperience = proofExperienceService.create(proofExperienceDTO);

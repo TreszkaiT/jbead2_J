@@ -36,7 +36,7 @@ public class SocialMediaController {
     public ResponseEntity<List<SocialMediaDTO>> findAll() {return ResponseEntity.ok(socialMediaService.findAll());}               // ResponseEntity : a HTTP válaszon tudunk módosítani vele. 200,201... úgy hogy a SocialMediaDTO-t becsomagoljuk ebbe a ResponseEntity generikus osztályba; HTTP headereket is bele tudunk még e mellett pakolni   ;;;
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<SocialMediaDTO> create(@RequestBody @Valid SocialMediaDTO socialMediaDTO, BindingResult bindingResult) {     // @Valid a MovieDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
+    public ResponseEntity<SocialMediaDTO> create(@RequestBody @Valid SocialMediaDTO socialMediaDTO, BindingResult bindingResult) {     // @Valid a ProofExperienceDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
         checkErrors(bindingResult);
 
         SocialMediaDTO saveSocialMedia = socialMediaService.create(socialMediaDTO);

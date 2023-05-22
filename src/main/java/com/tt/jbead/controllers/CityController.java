@@ -58,11 +58,11 @@ public class CityController {
 
     // frissítés id alapján
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity<CityDTO> update(@RequestBody @Valid CityDTO cityDTO, BindingResult bindingResult){                     // @RequestBody MovieDTO movieDTO:  a Request Body-ban várja az infót
+    public ResponseEntity<CityDTO> update(@RequestBody @Valid CityDTO cityDTO, BindingResult bindingResult){                     // @RequestBody CityDTO cityDTO:  a Request Body-ban várja az infót
         checkErrors(bindingResult);                                                             // alul alapmetódust írunk a validációs hibák lekezelésére
 
-        CityDTO updatedMovie = cityService.update(cityDTO);
-        return ResponseEntity.ok(updatedMovie);                                                 // 200-as hiba
+        CityDTO updatedCity = cityService.update(cityDTO);
+        return ResponseEntity.ok(updatedCity);                                                 // 200-as hiba
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)

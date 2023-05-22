@@ -36,7 +36,7 @@ public class PhoneController {
     public ResponseEntity<List<PhoneDTO>> findAll() {return ResponseEntity.ok(phoneService.findAll());}               // ResponseEntity : a HTTP válaszon tudunk módosítani vele. 200,201... úgy hogy a PhoneDTO-t becsomagoljuk ebbe a ResponseEntity generikus osztályba; HTTP headereket is bele tudunk még e mellett pakolni   ;;;
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<PhoneDTO> create(@RequestBody @Valid PhoneDTO phoneDTO, BindingResult bindingResult) {     // @Valid a MovieDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
+    public ResponseEntity<PhoneDTO> create(@RequestBody @Valid PhoneDTO phoneDTO, BindingResult bindingResult) {     // @Valid a PhoneDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
         checkErrors(bindingResult);
 
         PhoneDTO savePhone = phoneService.create(phoneDTO);
