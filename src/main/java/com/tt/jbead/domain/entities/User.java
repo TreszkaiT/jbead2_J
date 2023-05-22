@@ -36,7 +36,7 @@ public class User {
     @Column(name = "USR_EMAIL", length = 30)
     private String email;
 
-    @NotEmpty
+    //@NotEmpty
     @Column(name = "USR_PASSWOR")
     private String password;
 
