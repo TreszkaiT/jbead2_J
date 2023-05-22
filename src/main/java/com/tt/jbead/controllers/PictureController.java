@@ -1,6 +1,7 @@
 package com.tt.jbead.controllers;
 
 import com.tt.jbead.domain.dtos.PictureDTO;
+import com.tt.jbead.domain.dtos.ProofExperienceDTO;
 import com.tt.jbead.exceptions.InvalidEntityException;
 import com.tt.jbead.repositories.PictureRepository;
 import com.tt.jbead.services.impl.PictureServiceImpl;
@@ -32,16 +33,12 @@ public class PictureController {
         this.pictureService = pictureService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<List<PictureDTO>> findAll() {return ResponseEntity.ok(pictureService.findAll());}               // ResponseEntity : a HTTP válaszon tudunk módosítani vele. 200,201... úgy hogy a PictureDTO-t becsomagoljuk ebbe a ResponseEntity generikus osztályba; HTTP headereket is bele tudunk még e mellett pakolni   ;;;
+    @RequestMapping(path = "/all", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<List<PictureDTO>> findAll() {               // ResponseEntity : a HTTP válaszon tudunk módosítani vele. 200,201... úgy hogy a PictureDTO-t becsomagoljuk ebbe a ResponseEntity generikus osztályba; HTTP headereket is bele tudunk még e mellett pakolni   ;;;
+//        return ResponseEntity.ok(pictureService.findAll());
+        List<PictureDTO> pictureDTOS = pictureService.findAll();
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<PictureDTO> create(@RequestBody @Valid PictureDTO pictureDTO, BindingResult bindingResult) {     // @Valid a PictureDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
-        checkErrors(bindingResult);
-
-        PictureDTO savePicture = pictureService.create(pictureDTO);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                             .body(savePicture);
+        return ResponseEntity.ok().body(pictureDTOS);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = "application/json")
@@ -53,18 +50,27 @@ public class PictureController {
             response = ResponseEntity.ok(optionalPictureDTO.get());
         } else {
             response = ResponseEntity.status(HttpStatus.NOT_FOUND)
-                                     .body(null);
+                    .body(null);
         }
 
         return response;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity<PictureDTO> create(@RequestBody @Valid PictureDTO pictureDTO, BindingResult bindingResult) {     // @Valid a PictureDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
+        checkErrors(bindingResult);
+
+        PictureDTO savedPicture = pictureService.create(pictureDTO);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                             .body(savedPicture);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT, produces = "application/json")
     public ResponseEntity<PictureDTO> update(@RequestBody @Valid PictureDTO pictureDTO, BindingResult bindingResult) {
         checkErrors(bindingResult);
 
-        PictureDTO updatePicture = pictureService.update(pictureDTO);
-        return ResponseEntity.ok(updatePicture);
+        PictureDTO updatedPicture = pictureService.update(pictureDTO);
+        return ResponseEntity.ok(updatedPicture);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)

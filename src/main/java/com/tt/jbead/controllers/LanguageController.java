@@ -1,6 +1,7 @@
 package com.tt.jbead.controllers;
 
 import com.tt.jbead.domain.dtos.LanguageDTO;
+import com.tt.jbead.domain.dtos.MessageAppDTO;
 import com.tt.jbead.exceptions.InvalidEntityException;
 import com.tt.jbead.repositories.LanguageRepository;
 import com.tt.jbead.services.impl.LanguageServiceImpl;
@@ -32,15 +33,11 @@ public class LanguageController {
     }
 
     @RequestMapping(path = "/all", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<List<LanguageDTO>> findAll() {return ResponseEntity.ok(languageService.findAll());}               // ResponseEntity : a HTTP válaszon tudunk módosítani vele. 200,201... úgy hogy a LanguageDTO-t becsomagoljuk ebbe a ResponseEntity generikus osztályba; HTTP headereket is bele tudunk még e mellett pakolni   ;;;
+    public ResponseEntity<List<LanguageDTO>> findAll() {               // ResponseEntity : a HTTP válaszon tudunk módosítani vele. 200,201... úgy hogy a LanguageDTO-t becsomagoljuk ebbe a ResponseEntity generikus osztályba; HTTP headereket is bele tudunk még e mellett pakolni   ;;;
+//        return ResponseEntity.ok(languageService.findAll());
+        List<LanguageDTO> languageDTOS = languageService.findAll();
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<LanguageDTO> create(@RequestBody @Valid LanguageDTO languageDTO, BindingResult bindingResult) {     // @Valid a LanguageDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
-        checkErrors(bindingResult);
-
-        LanguageDTO saveLanguage = languageService.create(languageDTO);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                             .body(saveLanguage);
+        return ResponseEntity.ok().body(languageDTOS);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = "application/json")
@@ -52,18 +49,27 @@ public class LanguageController {
             response = ResponseEntity.ok(optionalLanguageDTO.get());
         } else {
             response = ResponseEntity.status(HttpStatus.NOT_FOUND)
-                                     .body(null);
+                    .body(null);
         }
 
         return response;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity<LanguageDTO> create(@RequestBody @Valid LanguageDTO languageDTO, BindingResult bindingResult) {     // @Valid a LanguageDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
+        checkErrors(bindingResult);
+
+        LanguageDTO savedLanguage = languageService.create(languageDTO);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                             .body(savedLanguage);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT, produces = "application/json")
     public ResponseEntity<LanguageDTO> update(@RequestBody @Valid LanguageDTO languageDTO, BindingResult bindingResult) {
         checkErrors(bindingResult);
 
-        LanguageDTO updateLanguage = languageService.update(languageDTO);
-        return ResponseEntity.ok(updateLanguage);
+        LanguageDTO updatedLanguage = languageService.update(languageDTO);
+        return ResponseEntity.ok(updatedLanguage);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)

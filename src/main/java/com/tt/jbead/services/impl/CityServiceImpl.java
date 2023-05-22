@@ -27,7 +27,7 @@ public class CityServiceImpl implements CityService {
     @Override
     public List<CityDTO> findAll() {
         List<City> cityList = cityRepository.findAll();
-        System.out.println("getCity1"+cityList);
+        //System.out.println("getCityAll1"+cityList);
         return cityRepository.findAll()
                 .stream()
                 .map(city -> modelMapper.map(city, CityDTO.class))

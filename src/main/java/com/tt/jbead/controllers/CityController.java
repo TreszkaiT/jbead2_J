@@ -35,7 +35,7 @@ public class CityController {
     public ResponseEntity<List<CityDTO>> findAll() {
         //System.out.println("getCity");return ResponseEntity.ok(cityService.findAll());
         List<CityDTO> cities = cityService.findAll();
-        //System.out.println("getCity"+cities);
+        //System.out.println("getCityAll"+cities);
         return ResponseEntity.ok().body(cities);
     }
 

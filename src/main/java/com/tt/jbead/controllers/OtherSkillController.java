@@ -1,6 +1,7 @@
 package com.tt.jbead.controllers;
 
 import com.tt.jbead.domain.dtos.OtherSkillDTO;
+import com.tt.jbead.domain.dtos.PhoneDTO;
 import com.tt.jbead.exceptions.InvalidEntityException;
 import com.tt.jbead.repositories.OtherSkillRepository;
 import com.tt.jbead.services.impl.OtherSkillServiceImpl;
@@ -32,16 +33,12 @@ public class OtherSkillController {
         this.otherSkillService = otherSkillService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<List<OtherSkillDTO>> findAll() {return ResponseEntity.ok(otherSkillService.findAll());}               // ResponseEntity : a HTTP válaszon tudunk módosítani vele. 200,201... úgy hogy a OtherSkillDTO-t becsomagoljuk ebbe a ResponseEntity generikus osztályba; HTTP headereket is bele tudunk még e mellett pakolni   ;;;
+    @RequestMapping(path = "/all", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<List<OtherSkillDTO>> findAll() {               // ResponseEntity : a HTTP válaszon tudunk módosítani vele. 200,201... úgy hogy a OtherSkillDTO-t becsomagoljuk ebbe a ResponseEntity generikus osztályba; HTTP headereket is bele tudunk még e mellett pakolni   ;;;
+//        return ResponseEntity.ok(otherSkillService.findAll());
+        List<OtherSkillDTO> otherSkillDTOS = otherSkillService.findAll();
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<OtherSkillDTO> create(@RequestBody @Valid OtherSkillDTO otherSkillDTO, BindingResult bindingResult) {     // @Valid a OtherSkilleDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
-        checkErrors(bindingResult);
-
-        OtherSkillDTO saveOtherSkill = otherSkillService.create(otherSkillDTO);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                             .body(saveOtherSkill);
+        return ResponseEntity.ok().body(otherSkillDTOS);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = "application/json")
@@ -53,18 +50,27 @@ public class OtherSkillController {
             response = ResponseEntity.ok(optionalOtherSkillDTO.get());
         } else {
             response = ResponseEntity.status(HttpStatus.NOT_FOUND)
-                                     .body(null);
+                    .body(null);
         }
 
         return response;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity<OtherSkillDTO> create(@RequestBody @Valid OtherSkillDTO otherSkillDTO, BindingResult bindingResult) {     // @Valid a OtherSkilleDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
+        checkErrors(bindingResult);
+
+        OtherSkillDTO savedOtherSkill = otherSkillService.create(otherSkillDTO);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                             .body(savedOtherSkill);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT, produces = "application/json")
     public ResponseEntity<OtherSkillDTO> update(@RequestBody @Valid OtherSkillDTO otherSkillDTO, BindingResult bindingResult) {
         checkErrors(bindingResult);
 
-        OtherSkillDTO updateOtherSkill = otherSkillService.update(otherSkillDTO);
-        return ResponseEntity.ok(updateOtherSkill);
+        OtherSkillDTO updatedOtherSkill = otherSkillService.update(otherSkillDTO);
+        return ResponseEntity.ok(updatedOtherSkill);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)

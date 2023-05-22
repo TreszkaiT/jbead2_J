@@ -1,6 +1,7 @@
 package com.tt.jbead.controllers;
 
 import com.tt.jbead.domain.dtos.ProofExperienceDTO;
+import com.tt.jbead.domain.dtos.UserDTO;
 import com.tt.jbead.exceptions.InvalidEntityException;
 import com.tt.jbead.repositories.ProofExperienceRepository;
 import com.tt.jbead.services.impl.ProofExperienceServiceImpl;
@@ -32,16 +33,12 @@ public class ProofExperienceController {
         this.proofExperienceService = proofExperienceService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<List<ProofExperienceDTO>> findAll() {return ResponseEntity.ok(proofExperienceService.findAll());}               // ResponseEntity : a HTTP válaszon tudunk módosítani vele. 200,201... úgy hogy a ProofExperienceDTO-t becsomagoljuk ebbe a ResponseEntity generikus osztályba; HTTP headereket is bele tudunk még e mellett pakolni   ;;;
+    @RequestMapping(path = "/all", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<List<ProofExperienceDTO>> findAll() {               // ResponseEntity : a HTTP válaszon tudunk módosítani vele. 200,201... úgy hogy a ProofExperienceDTO-t becsomagoljuk ebbe a ResponseEntity generikus osztályba; HTTP headereket is bele tudunk még e mellett pakolni   ;;;
+//        return ResponseEntity.ok(proofExperienceService.findAll());
+        List<ProofExperienceDTO> proofExperienceDTOS = proofExperienceService.findAll();
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<ProofExperienceDTO> create(@RequestBody @Valid ProofExperienceDTO proofExperienceDTO, BindingResult bindingResult) {     // @Valid a ProofExperienceDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
-        checkErrors(bindingResult);
-
-        ProofExperienceDTO saveProofExperience = proofExperienceService.create(proofExperienceDTO);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                             .body(saveProofExperience);
+        return ResponseEntity.ok().body(proofExperienceDTOS);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = "application/json")
@@ -53,18 +50,27 @@ public class ProofExperienceController {
             response = ResponseEntity.ok(optionalProofExperienceDTO.get());
         } else {
             response = ResponseEntity.status(HttpStatus.NOT_FOUND)
-                                     .body(null);
+                    .body(null);
         }
 
         return response;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity<ProofExperienceDTO> create(@RequestBody @Valid ProofExperienceDTO proofExperienceDTO, BindingResult bindingResult) {     // @Valid a ProofExperienceDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
+        checkErrors(bindingResult);
+
+        ProofExperienceDTO savedProofExperience = proofExperienceService.create(proofExperienceDTO);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                             .body(savedProofExperience);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT, produces = "application/json")
     public ResponseEntity<ProofExperienceDTO> update(@RequestBody @Valid ProofExperienceDTO proofExperienceDTO, BindingResult bindingResult) {
         checkErrors(bindingResult);
 
-        ProofExperienceDTO updateProofExperience = proofExperienceService.update(proofExperienceDTO);
-        return ResponseEntity.ok(updateProofExperience);
+        ProofExperienceDTO updatedProofExperience = proofExperienceService.update(proofExperienceDTO);
+        return ResponseEntity.ok(updatedProofExperience);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)

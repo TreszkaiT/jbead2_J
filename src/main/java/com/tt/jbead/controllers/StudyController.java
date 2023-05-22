@@ -1,6 +1,7 @@
 package com.tt.jbead.controllers;
 
 import com.tt.jbead.domain.dtos.StudyDTO;
+import com.tt.jbead.domain.dtos.UserDTO;
 import com.tt.jbead.exceptions.InvalidEntityException;
 import com.tt.jbead.repositories.StudyRepository;
 import com.tt.jbead.services.impl.StudyServiceImpl;
@@ -32,16 +33,12 @@ public class StudyController {
         this.studyService = studyService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<List<StudyDTO>> findAll() {return ResponseEntity.ok(studyService.findAll());}               // ResponseEntity : a HTTP válaszon tudunk módosítani vele. 200,201... úgy hogy a StudyDTO-t becsomagoljuk ebbe a ResponseEntity generikus osztályba; HTTP headereket is bele tudunk még e mellett pakolni   ;;;
+    @RequestMapping(path = "/all", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<List<StudyDTO>> findAll() {               // ResponseEntity : a HTTP válaszon tudunk módosítani vele. 200,201... úgy hogy a StudyDTO-t becsomagoljuk ebbe a ResponseEntity generikus osztályba; HTTP headereket is bele tudunk még e mellett pakolni   ;;;
+//        return ResponseEntity.ok(studyService.findAll());
+        List<StudyDTO> studies = studyService.findAll();
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<StudyDTO> create(@RequestBody @Valid StudyDTO studyDTO, BindingResult bindingResult) {     // @Valid a ProofExperienceDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
-        checkErrors(bindingResult);
-
-        StudyDTO saveStudy = studyService.create(studyDTO);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                             .body(saveStudy);
+        return ResponseEntity.ok().body(studies);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = "application/json")
@@ -53,10 +50,19 @@ public class StudyController {
             response = ResponseEntity.ok(optionalStudyDTO.get());
         } else {
             response = ResponseEntity.status(HttpStatus.NOT_FOUND)
-                                     .body(null);
+                    .body(null);
         }
 
         return response;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity<StudyDTO> create(@RequestBody @Valid StudyDTO studyDTO, BindingResult bindingResult) {     // @Valid a ProofExperienceDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
+        checkErrors(bindingResult);
+
+        StudyDTO createdStudy = studyService.create(studyDTO);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                             .body(createdStudy);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT, produces = "application/json")

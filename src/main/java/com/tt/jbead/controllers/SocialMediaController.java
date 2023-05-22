@@ -1,6 +1,7 @@
 package com.tt.jbead.controllers;
 
 import com.tt.jbead.domain.dtos.SocialMediaDTO;
+import com.tt.jbead.domain.dtos.StudyDTO;
 import com.tt.jbead.exceptions.InvalidEntityException;
 import com.tt.jbead.repositories.SocialMediaRepository;
 import com.tt.jbead.services.impl.SocialMediaServiceImpl;
@@ -32,16 +33,12 @@ public class SocialMediaController {
         this.socialMediaService = socialMediaService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<List<SocialMediaDTO>> findAll() {return ResponseEntity.ok(socialMediaService.findAll());}               // ResponseEntity : a HTTP válaszon tudunk módosítani vele. 200,201... úgy hogy a SocialMediaDTO-t becsomagoljuk ebbe a ResponseEntity generikus osztályba; HTTP headereket is bele tudunk még e mellett pakolni   ;;;
+    @RequestMapping(path = "/all", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<List<SocialMediaDTO>> findAll() {               // ResponseEntity : a HTTP válaszon tudunk módosítani vele. 200,201... úgy hogy a SocialMediaDTO-t becsomagoljuk ebbe a ResponseEntity generikus osztályba; HTTP headereket is bele tudunk még e mellett pakolni   ;;;
+//        return ResponseEntity.ok(socialMediaService.findAll());
+        List<SocialMediaDTO> socialMediaDTOS = socialMediaService.findAll();
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<SocialMediaDTO> create(@RequestBody @Valid SocialMediaDTO socialMediaDTO, BindingResult bindingResult) {     // @Valid a ProofExperienceDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
-        checkErrors(bindingResult);
-
-        SocialMediaDTO saveSocialMedia = socialMediaService.create(socialMediaDTO);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                             .body(saveSocialMedia);
+        return ResponseEntity.ok().body(socialMediaDTOS);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = "application/json")
@@ -53,18 +50,27 @@ public class SocialMediaController {
             response = ResponseEntity.ok(optionalSocialMediaDTO.get());
         } else {
             response = ResponseEntity.status(HttpStatus.NOT_FOUND)
-                                     .body(null);
+                    .body(null);
         }
 
         return response;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity<SocialMediaDTO> create(@RequestBody @Valid SocialMediaDTO socialMediaDTO, BindingResult bindingResult) {     // @Valid a ProofExperienceDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
+        checkErrors(bindingResult);
+
+        SocialMediaDTO savedSocialMedia = socialMediaService.create(socialMediaDTO);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                             .body(savedSocialMedia);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT, produces = "application/json")
     public ResponseEntity<SocialMediaDTO> update(@RequestBody @Valid SocialMediaDTO socialMediaDTO, BindingResult bindingResult) {
         checkErrors(bindingResult);
 
-        SocialMediaDTO updateSocialMedia = socialMediaService.update(socialMediaDTO);
-        return ResponseEntity.ok(updateSocialMedia);
+        SocialMediaDTO updatedSocialMedia = socialMediaService.update(socialMediaDTO);
+        return ResponseEntity.ok(updatedSocialMedia);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)

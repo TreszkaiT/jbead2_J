@@ -1,6 +1,7 @@
 package com.tt.jbead.controllers;
 
 import com.tt.jbead.domain.dtos.MessageAppDTO;
+import com.tt.jbead.domain.dtos.OtherSkillDTO;
 import com.tt.jbead.exceptions.InvalidEntityException;
 import com.tt.jbead.repositories.MessageAppRepository;
 import com.tt.jbead.services.impl.MessageAppServiceImpl;
@@ -32,16 +33,12 @@ public class MessageAppController {
         this.messageAppService = messageAppService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<List<MessageAppDTO>> findAll() {return ResponseEntity.ok(messageAppService.findAll());}               // ResponseEntity : a HTTP válaszon tudunk módosítani vele. 200,201... úgy hogy a MessageAppDTO-t becsomagoljuk ebbe a ResponseEntity generikus osztályba; HTTP headereket is bele tudunk még e mellett pakolni   ;;;
+    @RequestMapping(path = "/all", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<List<MessageAppDTO>> findAll() {               // ResponseEntity : a HTTP válaszon tudunk módosítani vele. 200,201... úgy hogy a MessageAppDTO-t becsomagoljuk ebbe a ResponseEntity generikus osztályba; HTTP headereket is bele tudunk még e mellett pakolni   ;;;
+//        return ResponseEntity.ok(messageAppService.findAll());
+        List<MessageAppDTO> messageAppDTOS = messageAppService.findAll();
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<MessageAppDTO> create(@RequestBody @Valid MessageAppDTO messageAppDTO, BindingResult bindingResult) {     // @Valid a MessageAppDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
-        checkErrors(bindingResult);
-
-        MessageAppDTO saveMessageApp = messageAppService.create(messageAppDTO);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                             .body(saveMessageApp);
+        return ResponseEntity.ok().body(messageAppDTOS);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = "application/json")
@@ -53,18 +50,27 @@ public class MessageAppController {
             response = ResponseEntity.ok(optionalMessageAppDTO.get());
         } else {
             response = ResponseEntity.status(HttpStatus.NOT_FOUND)
-                                     .body(null);
+                    .body(null);
         }
 
         return response;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity<MessageAppDTO> create(@RequestBody @Valid MessageAppDTO messageAppDTO, BindingResult bindingResult) {     // @Valid a MessageAppDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
+        checkErrors(bindingResult);
+
+        MessageAppDTO savedMessageApp = messageAppService.create(messageAppDTO);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                             .body(savedMessageApp);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT, produces = "application/json")
     public ResponseEntity<MessageAppDTO> update(@RequestBody @Valid MessageAppDTO messageAppDTO, BindingResult bindingResult) {
         checkErrors(bindingResult);
 
-        MessageAppDTO updateMessageApp = messageAppService.update(messageAppDTO);
-        return ResponseEntity.ok(updateMessageApp);
+        MessageAppDTO updatedMessageApp = messageAppService.update(messageAppDTO);
+        return ResponseEntity.ok(updatedMessageApp);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)

@@ -1,6 +1,7 @@
 package com.tt.jbead.controllers;
 
 import com.tt.jbead.domain.dtos.PhoneDTO;
+import com.tt.jbead.domain.dtos.PictureDTO;
 import com.tt.jbead.exceptions.InvalidEntityException;
 import com.tt.jbead.repositories.PhoneRepository;
 import com.tt.jbead.services.impl.PhoneServiceImpl;
@@ -32,16 +33,12 @@ public class PhoneController {
         this.phoneService = phoneService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<List<PhoneDTO>> findAll() {return ResponseEntity.ok(phoneService.findAll());}               // ResponseEntity : a HTTP válaszon tudunk módosítani vele. 200,201... úgy hogy a PhoneDTO-t becsomagoljuk ebbe a ResponseEntity generikus osztályba; HTTP headereket is bele tudunk még e mellett pakolni   ;;;
+    @RequestMapping(path = "/all", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<List<PhoneDTO>> findAll() {               // ResponseEntity : a HTTP válaszon tudunk módosítani vele. 200,201... úgy hogy a PhoneDTO-t becsomagoljuk ebbe a ResponseEntity generikus osztályba; HTTP headereket is bele tudunk még e mellett pakolni   ;;;
+//        return ResponseEntity.ok(phoneService.findAll());
+        List<PhoneDTO> phoneDTOS = phoneService.findAll();
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<PhoneDTO> create(@RequestBody @Valid PhoneDTO phoneDTO, BindingResult bindingResult) {     // @Valid a PhoneDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
-        checkErrors(bindingResult);
-
-        PhoneDTO savePhone = phoneService.create(phoneDTO);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                             .body(savePhone);
+        return ResponseEntity.ok().body(phoneDTOS);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = "application/json")
@@ -53,18 +50,27 @@ public class PhoneController {
             response = ResponseEntity.ok(optionalPhoneDTO.get());
         } else {
             response = ResponseEntity.status(HttpStatus.NOT_FOUND)
-                                     .body(null);
+                    .body(null);
         }
 
         return response;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity<PhoneDTO> create(@RequestBody @Valid PhoneDTO phoneDTO, BindingResult bindingResult) {     // @Valid a PhoneDTO-ban használja így a validációt  ;;  , BindingResult bindingResult  a validációs hibákat ebbe teszi bele, és mi azokat le tudjuk innen kérni
+        checkErrors(bindingResult);
+
+        PhoneDTO savedPhone = phoneService.create(phoneDTO);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                             .body(savedPhone);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT, produces = "application/json")
     public ResponseEntity<PhoneDTO> update(@RequestBody @Valid PhoneDTO phoneDTO, BindingResult bindingResult) {
         checkErrors(bindingResult);
 
-        PhoneDTO updatePhone = phoneService.update(phoneDTO);
-        return ResponseEntity.ok(updatePhone);
+        PhoneDTO updatedPhone = phoneService.update(phoneDTO);
+        return ResponseEntity.ok(updatedPhone);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)

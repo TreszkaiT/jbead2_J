@@ -84,8 +84,8 @@ public class UserController {
     public ResponseEntity<UserDTO> create(@RequestBody @Valid UserDTO userDTO, BindingResult bindingResult){
         checkErrors(bindingResult);
 
-        UserDTO updateUser = userService.create(userDTO);
-        return ResponseEntity.ok(updateUser);
+        UserDTO createdUser = userService.create(userDTO);
+        return ResponseEntity.ok(createdUser);
     }
 
     // frissítés id alapján
