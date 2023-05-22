@@ -84,7 +84,7 @@ public class UserController {
     }
 
     // frissítés id alapján
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(path = "/{id}", method = RequestMethod.PUT, produces = "application/json")
     public ResponseEntity<UserDTO> update(@RequestBody @Valid UserDTO userDTO, BindingResult bindingResult){                     // @RequestBody MovieDTO userDTO:  a Request Body-ban várja az infót
         checkErrors(bindingResult);                                                             // alul alapmetódust írunk a validációs hibák lekezelésére
 
