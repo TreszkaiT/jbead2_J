@@ -34,17 +34,17 @@ public class LanguageServiceImpl implements LanguageService {
     }
 
     @Override
+    public Optional<LanguageDTO> findById(Integer id) {
+        Optional<Language> optionalLanguage = languageRepository.findById(id);
+        return optionalLanguage.map(language -> modelMapper.map(language, LanguageDTO.class));
+    }
+
+    @Override
     public LanguageDTO create(LanguageDTO languageDTO) {
         Language languageToSave = modelMapper.map(languageDTO, Language.class);
         languageToSave.setId(null);                                                // védelem, hogy ne írjuk felül a már meglévő is-jű elemeket a DB-ban. Null-nál ugyanis új id-val generálja az új rekordokat a Spring
         Language savedLanguage = languageRepository.save(languageToSave);
         return modelMapper.map(savedLanguage, LanguageDTO.class);
-    }
-
-    @Override
-    public Optional<LanguageDTO> findById(Integer id) {
-        Optional<Language> optionalLanguage = languageRepository.findById(id);
-        return optionalLanguage.map(language -> modelMapper.map(language, LanguageDTO.class));
     }
 
     @Override

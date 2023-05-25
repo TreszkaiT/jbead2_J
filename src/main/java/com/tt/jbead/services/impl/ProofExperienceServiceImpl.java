@@ -34,6 +34,12 @@ public class ProofExperienceServiceImpl implements ProofExperienceService {
     }
 
     @Override
+    public Optional<ProofExperienceDTO> findById(Integer id) {
+        Optional<ProofExperience> optionalProofExperience = proofExperienceRepository.findById(id);
+        return optionalProofExperience.map(proofExperience -> modelMapper.map(proofExperience, ProofExperienceDTO.class));
+    }
+
+    @Override
     public ProofExperienceDTO create(ProofExperienceDTO proofExperienceDTO) {
         ProofExperience proofExperienceToSave = modelMapper.map(proofExperienceDTO, ProofExperience.class);
         proofExperienceToSave.setId(null);                                                // védelem, hogy ne írjuk felül a már meglévő is-jű elemeket a DB-ban. Null-nál ugyanis új id-val generálja az új rekordokat a Spring
@@ -41,11 +47,6 @@ public class ProofExperienceServiceImpl implements ProofExperienceService {
         return modelMapper.map(savedProofExperience, ProofExperienceDTO.class);
     }
 
-    @Override
-    public Optional<ProofExperienceDTO> findById(Integer id) {
-        Optional<ProofExperience> optionalProofExperience = proofExperienceRepository.findById(id);
-        return optionalProofExperience.map(proofExperience -> modelMapper.map(proofExperience, ProofExperienceDTO.class));
-    }
 
     @Override
     public ProofExperienceDTO update(ProofExperienceDTO proofExperienceDTO) {

@@ -34,17 +34,17 @@ public class MessageAppServiceImpl implements MessageAppService {
     }
 
     @Override
+    public Optional<MessageAppDTO> findById(Integer id) {
+        Optional<MessageApp> optionalMessageApp = messageAppRepository.findById(id);
+        return optionalMessageApp.map(messageApp -> modelMapper.map(messageApp, MessageAppDTO.class));
+    }
+
+    @Override
     public MessageAppDTO create(MessageAppDTO messageAppDTO) {
         MessageApp messageAppToSave = modelMapper.map(messageAppDTO, MessageApp.class);
         messageAppToSave.setId(null);                                                // védelem, hogy ne írjuk felül a már meglévő is-jű elemeket a DB-ban. Null-nál ugyanis új id-val generálja az új rekordokat a Spring
         MessageApp savedMessageApp = messageAppRepository.save(messageAppToSave);
         return modelMapper.map(savedMessageApp, MessageAppDTO.class);
-    }
-
-    @Override
-    public Optional<MessageAppDTO> findById(Integer id) {
-        Optional<MessageApp> optionalMessageApp = messageAppRepository.findById(id);
-        return optionalMessageApp.map(messageApp -> modelMapper.map(messageApp, MessageAppDTO.class));
     }
 
     @Override

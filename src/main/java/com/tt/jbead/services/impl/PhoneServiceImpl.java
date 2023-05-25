@@ -34,17 +34,17 @@ public class PhoneServiceImpl implements PhoneService {
     }
 
     @Override
+    public Optional<PhoneDTO> findById(Integer id) {
+        Optional<Phone> optionalPhone = phoneRepository.findById(id);
+        return optionalPhone.map(phone -> modelMapper.map(phone, PhoneDTO.class));
+    }
+
+    @Override
     public PhoneDTO create(PhoneDTO phoneDTO) {
         Phone phoneToSave = modelMapper.map(phoneDTO, Phone.class);
         phoneToSave.setId(null);                                                // védelem, hogy ne írjuk felül a már meglévő is-jű elemeket a DB-ban. Null-nál ugyanis új id-val generálja az új rekordokat a Spring
         Phone savedPhone = phoneRepository.save(phoneToSave);
         return modelMapper.map(savedPhone, PhoneDTO.class);
-    }
-
-    @Override
-    public Optional<PhoneDTO> findById(Integer id) {
-        Optional<Phone> optionalPhone = phoneRepository.findById(id);
-        return optionalPhone.map(phone -> modelMapper.map(phone, PhoneDTO.class));
     }
 
     @Override

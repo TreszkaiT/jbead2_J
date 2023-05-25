@@ -34,17 +34,17 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
+    public Optional<StudyDTO> findById(Integer id) {
+        Optional<Study> optionalStudy = studyRepository.findById(id);
+        return optionalStudy.map(study -> modelMapper.map(study, StudyDTO.class));
+    }
+
+    @Override
     public StudyDTO create(StudyDTO studyDTO) {
         Study studyToSave = modelMapper.map(studyDTO, Study.class);
         studyToSave.setId(null);                                                // védelem, hogy ne írjuk felül a már meglévő is-jű elemeket a DB-ban. Null-nál ugyanis új id-val generálja az új rekordokat a Spring
         Study savedStudy = studyRepository.save(studyToSave);
         return modelMapper.map(savedStudy, StudyDTO.class);
-    }
-
-    @Override
-    public Optional<StudyDTO> findById(Integer id) {
-        Optional<Study> optionalStudy = studyRepository.findById(id);
-        return optionalStudy.map(study -> modelMapper.map(study, StudyDTO.class));
     }
 
     @Override

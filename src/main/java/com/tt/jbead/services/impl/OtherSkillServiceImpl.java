@@ -34,17 +34,17 @@ public class OtherSkillServiceImpl implements OtherSkillService {
     }
 
     @Override
+    public Optional<OtherSkillDTO> findById(Integer id) {
+        Optional<OtherSkill> optionalOtherSkill = otherSkillRepository.findById(id);
+        return optionalOtherSkill.map(otherSkill -> modelMapper.map(otherSkill, OtherSkillDTO.class));
+    }
+
+    @Override
     public OtherSkillDTO create(OtherSkillDTO otherSkillDTO) {
         OtherSkill otherSkillToSave = modelMapper.map(otherSkillDTO, OtherSkill.class);
         otherSkillToSave.setId(null);                                                // védelem, hogy ne írjuk felül a már meglévő is-jű elemeket a DB-ban. Null-nál ugyanis új id-val generálja az új rekordokat a Spring
         OtherSkill savedOtherSkill = otherSkillRepository.save(otherSkillToSave);
         return modelMapper.map(savedOtherSkill, OtherSkillDTO.class);
-    }
-
-    @Override
-    public Optional<OtherSkillDTO> findById(Integer id) {
-        Optional<OtherSkill> optionalOtherSkill = otherSkillRepository.findById(id);
-        return optionalOtherSkill.map(otherSkill -> modelMapper.map(otherSkill, OtherSkillDTO.class));
     }
 
     @Override

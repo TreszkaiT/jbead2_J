@@ -34,17 +34,17 @@ public class SocialMediaServiceImpl implements SocialMediaService {
     }
 
     @Override
+    public Optional<SocialMediaDTO> findById(Integer id) {
+        Optional<SocialMedia> optionalSocialMedia = socialMediaRepository.findById(id);
+        return optionalSocialMedia.map(socialMedia -> modelMapper.map(socialMedia, SocialMediaDTO.class));
+    }
+
+    @Override
     public SocialMediaDTO create(SocialMediaDTO socialMediaDTO) {
         SocialMedia socialMediaToSave = modelMapper.map(socialMediaDTO, SocialMedia.class);
         socialMediaToSave.setId(null);                                                // védelem, hogy ne írjuk felül a már meglévő is-jű elemeket a DB-ban. Null-nál ugyanis új id-val generálja az új rekordokat a Spring
         SocialMedia savedSocialMedia = socialMediaRepository.save(socialMediaToSave);
         return modelMapper.map(savedSocialMedia, SocialMediaDTO.class);
-    }
-
-    @Override
-    public Optional<SocialMediaDTO> findById(Integer id) {
-        Optional<SocialMedia> optionalSocialMedia = socialMediaRepository.findById(id);
-        return optionalSocialMedia.map(socialMedia -> modelMapper.map(socialMedia, SocialMediaDTO.class));
     }
 
     @Override

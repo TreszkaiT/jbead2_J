@@ -2,6 +2,7 @@ package com.tt.jbead.domain.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,12 +22,12 @@ public class Phone {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @NotEmpty
+    @NotNull
     @Column(name = "PHON_CODE")
     private Integer code;
 
-    @NotEmpty
-    @Column(name = "phon_number")
-    private Integer number;
+    @NotNull
+    @Column(name = "PHON_NUMBER")
+    private Integer pnumber;
 }
 

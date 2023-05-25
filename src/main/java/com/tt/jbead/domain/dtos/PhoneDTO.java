@@ -15,5 +15,5 @@ public class PhoneDTO {
 
     private Integer code;
 
-    private Integer number;
+    private Integer pnumber;
 }

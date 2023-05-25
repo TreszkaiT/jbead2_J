@@ -34,17 +34,17 @@ public class PictureServiceImpl implements PictureService {
     }
 
     @Override
+    public Optional<PictureDTO> findById(Integer id) {
+        Optional<Picture> optionalPicture = pictureRepository.findById(id);
+        return optionalPicture.map(picture -> modelMapper.map(picture, PictureDTO.class));
+    }
+
+    @Override
     public PictureDTO create(PictureDTO pictureDTO) {
         Picture pictureToSave = modelMapper.map(pictureDTO, Picture.class);
         pictureToSave.setId(null);                                                // védelem, hogy ne írjuk felül a már meglévő is-jű elemeket a DB-ban. Null-nál ugyanis új id-val generálja az új rekordokat a Spring
         Picture savedPicture = pictureRepository.save(pictureToSave);
         return modelMapper.map(savedPicture, PictureDTO.class);
-    }
-
-    @Override
-    public Optional<PictureDTO> findById(Integer id) {
-        Optional<Picture> optionalPicture = pictureRepository.findById(id);
-        return optionalPicture.map(picture -> modelMapper.map(picture, PictureDTO.class));
     }
 
     @Override
