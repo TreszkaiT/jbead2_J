@@ -21,7 +21,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping(path = "/socialMedia")
+@RequestMapping(path = "/socialmedia")
 public class SocialMediaController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClassName.class);//MethodHandles.lookup().lookupClass());//SocialMediaController.class);       // a this.getClass().getName() static metódusnál nem jó

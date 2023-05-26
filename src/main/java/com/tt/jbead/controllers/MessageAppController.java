@@ -21,7 +21,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping(path = "/messageApp")
+@RequestMapping(path = "/messageapp")
 public class MessageAppController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClassName.class);//MethodHandles.lookup().lookupClass());//MessageAppController.class);       // a this.getClass().getName() static metódusnál nem jó

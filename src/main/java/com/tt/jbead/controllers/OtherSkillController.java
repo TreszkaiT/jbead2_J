@@ -21,7 +21,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping(path = "/otherSkill")
+@RequestMapping(path = "/otherskill")
 public class OtherSkillController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClassName.class);//MethodHandles.lookup().lookupClass());//OtherSkillController.class);       // a this.getClass().getName() static metódusnál nem jó

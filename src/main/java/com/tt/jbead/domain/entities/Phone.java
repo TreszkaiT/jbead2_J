@@ -22,7 +22,7 @@ public class Phone {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @NotNull
+//    @NotNull
     @Column(name = "PHON_CODE")
     private Integer code;
 
