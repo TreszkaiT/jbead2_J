@@ -31,7 +31,7 @@ public class Picture {
     @Column(name = "PIC_TYPE")
     private String type;
 
-    @NotNull
+//    @NotNull
     @Column(name = "PIC_UUID")
     private UUID uuid;
 }
