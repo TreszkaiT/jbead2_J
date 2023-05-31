@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 @Service
 public class PictureServiceImpl implements PictureService {
 
-    private PictureRepository pictureRepository;
-    private ModelMapper modelMapper;
+    private final PictureRepository pictureRepository;
+    private final ModelMapper modelMapper;
 
     public PictureServiceImpl(PictureRepository pictureRepository, ModelMapper modelMapper) {        // Spring Data Injection - with in Constructor
         this.pictureRepository = pictureRepository;

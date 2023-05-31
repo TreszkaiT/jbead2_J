@@ -15,9 +15,9 @@ import java.util.stream.Collectors;
 @Service
 public class CityServiceImpl implements CityService {
 
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;                  // final így immutable, mert a Bean az Singleton, és ha ketten akarják egy időben párhuzamosan módosítani, akkor elszállhat a progi, így final-é kell tenni
 
-    private CityRepository cityRepository;
+    private final CityRepository cityRepository;
 
     public CityServiceImpl(CityRepository cityRepository, ModelMapper modelMapper){
         this.cityRepository = cityRepository;

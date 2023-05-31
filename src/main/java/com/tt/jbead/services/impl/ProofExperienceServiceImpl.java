@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 @Service
 public class ProofExperienceServiceImpl implements ProofExperienceService {
 
-    private ProofExperienceRepository proofExperienceRepository;
-    private ModelMapper modelMapper;
+    private final ProofExperienceRepository proofExperienceRepository;
+    private final ModelMapper modelMapper;
 
     public ProofExperienceServiceImpl(ProofExperienceRepository proofExperienceRepository, ModelMapper modelMapper) {        // Spring Data Injection - with in Constructor
         this.proofExperienceRepository = proofExperienceRepository;

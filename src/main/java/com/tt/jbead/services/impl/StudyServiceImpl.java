@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 @Service
 public class StudyServiceImpl implements StudyService {
 
-    private StudyRepository studyRepository;
-    private ModelMapper modelMapper;
+    private final StudyRepository studyRepository;
+    private final ModelMapper modelMapper;
 
     public StudyServiceImpl(StudyRepository studyRepository, ModelMapper modelMapper) {        // Spring Data Injection - with in Constructor
         this.studyRepository = studyRepository;

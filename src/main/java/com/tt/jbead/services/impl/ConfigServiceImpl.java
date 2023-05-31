@@ -14,7 +14,7 @@ import java.util.Optional;
 public class ConfigServiceImpl implements ConfigService {
 
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public ConfigServiceImpl(UserRepository userRepository){
         this.userRepository = userRepository;

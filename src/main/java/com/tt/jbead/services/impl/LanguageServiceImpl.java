@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 @Service
 public class LanguageServiceImpl implements LanguageService {
 
-    private LanguageRepository languageRepository;
-    private ModelMapper modelMapper;
+    private final LanguageRepository languageRepository;
+    private final ModelMapper modelMapper;
 
     public LanguageServiceImpl(LanguageRepository languageRepository, ModelMapper modelMapper) {        // Spring Data Injection - with in Constructor
         this.languageRepository = languageRepository;

@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 @Service
 public class SocialMediaServiceImpl implements SocialMediaService {
 
-    private SocialMediaRepository socialMediaRepository;
-    private ModelMapper modelMapper;
+    private final SocialMediaRepository socialMediaRepository;
+    private final ModelMapper modelMapper;
 
     public SocialMediaServiceImpl(SocialMediaRepository socialMediaRepository, ModelMapper modelMapper) {        // Spring Data Injection - with in Constructor
         this.socialMediaRepository = socialMediaRepository;

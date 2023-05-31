@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 @Service
 public class MessageAppServiceImpl implements MessageAppService {
 
-    private MessageAppRepository messageAppRepository;
-    private ModelMapper modelMapper;
+    private final MessageAppRepository messageAppRepository;
+    private final ModelMapper modelMapper;
 
     public MessageAppServiceImpl(MessageAppRepository messageAppRepository, ModelMapper modelMapper) {        // Spring Data Injection - with in Constructor
         this.messageAppRepository = messageAppRepository;

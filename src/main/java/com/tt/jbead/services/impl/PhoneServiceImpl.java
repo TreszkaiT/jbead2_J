@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 @Service
 public class PhoneServiceImpl implements PhoneService {
 
-    private PhoneRepository phoneRepository;
-    private ModelMapper modelMapper;
+    private final PhoneRepository phoneRepository;
+    private final ModelMapper modelMapper;
 
     public PhoneServiceImpl(PhoneRepository phoneRepository, ModelMapper modelMapper) {        // Spring Data Injection - with in Constructor
         this.phoneRepository = phoneRepository;

@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 @Service
 public class OtherSkillServiceImpl implements OtherSkillService {
 
-    private OtherSkillRepository otherSkillRepository;
-    private ModelMapper modelMapper;
+    private final OtherSkillRepository otherSkillRepository;
+    private final ModelMapper modelMapper;
 
     public OtherSkillServiceImpl(OtherSkillRepository otherSkillRepository, ModelMapper modelMapper) {        // Spring Data Injection - with in Constructor
         this.otherSkillRepository = otherSkillRepository;
