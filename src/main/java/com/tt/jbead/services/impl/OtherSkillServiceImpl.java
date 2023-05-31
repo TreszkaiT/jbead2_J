@@ -2,7 +2,7 @@ package com.tt.jbead.services.impl;
 
 import com.tt.jbead.domain.entities.OtherSkill;
 import com.tt.jbead.domain.dtos.OtherSkillDTO;
-import com.tt.jbead.exceptions.NotFoundExceptionOtherSkill;
+import com.tt.jbead.exceptions.notfound.OtherSkillNotFoundException;
 import com.tt.jbead.repositories.OtherSkillRepository;
 import com.tt.jbead.services.OtherSkillService;
 import org.modelmapper.ModelMapper;
@@ -53,7 +53,7 @@ public class OtherSkillServiceImpl implements OtherSkillService {
         Optional<OtherSkill> optionalOtherSkill = otherSkillRepository.findById(id);
 
         if(optionalOtherSkill.isEmpty()){
-            throw new NotFoundExceptionOtherSkill("OtherSkill not found in database with id="+id);
+            throw new OtherSkillNotFoundException("OtherSkill not found in database with id="+id);
         }
 
         OtherSkill otherSkillToUpdate = modelMapper.map(otherSkillDTO, OtherSkill.class);
@@ -69,7 +69,7 @@ public class OtherSkillServiceImpl implements OtherSkillService {
             OtherSkill otherSkillToDelete = optionalOtherSkill.get();
             otherSkillRepository.delete(otherSkillToDelete);
         } else {
-            throw new NotFoundExceptionOtherSkill("OtherSkill not found in database with id="+id);
+            throw new OtherSkillNotFoundException("OtherSkill not found in database with id="+id);
         }
     }
 }

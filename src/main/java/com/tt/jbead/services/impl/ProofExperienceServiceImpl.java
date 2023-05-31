@@ -2,7 +2,7 @@ package com.tt.jbead.services.impl;
 
 import com.tt.jbead.domain.entities.ProofExperience;
 import com.tt.jbead.domain.dtos.ProofExperienceDTO;
-import com.tt.jbead.exceptions.NotFoundExceptionProofExperience;
+import com.tt.jbead.exceptions.notfound.ProofExperienceNotFoundException;
 import com.tt.jbead.repositories.ProofExperienceRepository;
 import com.tt.jbead.services.ProofExperienceService;
 import org.modelmapper.ModelMapper;
@@ -54,7 +54,7 @@ public class ProofExperienceServiceImpl implements ProofExperienceService {
         Optional<ProofExperience> optionalProofExperience = proofExperienceRepository.findById(id);
 
         if(optionalProofExperience.isEmpty()){
-            throw new NotFoundExceptionProofExperience("ProofExperience not found in database with id="+id);
+            throw new ProofExperienceNotFoundException("ProofExperience not found in database with id="+id);
         }
 
         ProofExperience proofExperienceToUpdate = modelMapper.map(proofExperienceDTO, ProofExperience.class);
@@ -70,7 +70,7 @@ public class ProofExperienceServiceImpl implements ProofExperienceService {
             ProofExperience proofExperienceToDelete = optionalProofExperience.get();
             proofExperienceRepository.delete(proofExperienceToDelete);
         } else {
-            throw new NotFoundExceptionProofExperience("ProofExperience not found in database with id="+id);
+            throw new ProofExperienceNotFoundException("ProofExperience not found in database with id="+id);
         }
     }
 }

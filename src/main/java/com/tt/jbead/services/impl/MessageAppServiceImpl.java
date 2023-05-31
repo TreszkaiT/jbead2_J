@@ -2,7 +2,7 @@ package com.tt.jbead.services.impl;
 
 import com.tt.jbead.domain.entities.MessageApp;
 import com.tt.jbead.domain.dtos.MessageAppDTO;
-import com.tt.jbead.exceptions.NotFoundExceptionMessageApp;
+import com.tt.jbead.exceptions.notfound.MessageAppNotFoundException;
 import com.tt.jbead.repositories.MessageAppRepository;
 import com.tt.jbead.services.MessageAppService;
 import org.modelmapper.ModelMapper;
@@ -53,7 +53,7 @@ public class MessageAppServiceImpl implements MessageAppService {
         Optional<MessageApp> optionalMessageApp = messageAppRepository.findById(id);
 
         if(optionalMessageApp.isEmpty()){
-            throw new NotFoundExceptionMessageApp("MessageApp not found in database with id="+id);
+            throw new MessageAppNotFoundException("MessageApp not found in database with id="+id);
         }
 
         MessageApp messageAppToUpdate = modelMapper.map(messageAppDTO, MessageApp.class);
@@ -69,7 +69,7 @@ public class MessageAppServiceImpl implements MessageAppService {
             MessageApp messageAppToDelete = optionalMessageApp.get();
             messageAppRepository.delete(messageAppToDelete);
         } else {
-            throw new NotFoundExceptionMessageApp("MessageApp not found in database with id="+id);
+            throw new MessageAppNotFoundException("MessageApp not found in database with id="+id);
         }
     }
 }

@@ -2,7 +2,7 @@ package com.tt.jbead.services.impl;
 
 import com.tt.jbead.domain.entities.Phone;
 import com.tt.jbead.domain.dtos.PhoneDTO;
-import com.tt.jbead.exceptions.NotFoundExceptionPhone;
+import com.tt.jbead.exceptions.notfound.PhoneNotFoundException;
 import com.tt.jbead.repositories.PhoneRepository;
 import com.tt.jbead.services.PhoneService;
 import org.modelmapper.ModelMapper;
@@ -53,7 +53,7 @@ public class PhoneServiceImpl implements PhoneService {
         Optional<Phone> optionalPhone = phoneRepository.findById(id);
 
         if(optionalPhone.isEmpty()){
-            throw new NotFoundExceptionPhone("Phone not found in database with id="+id);
+            throw new PhoneNotFoundException("Phone not found in database with id="+id);
         }
 
         Phone phoneToUpdate = modelMapper.map(phoneDTO, Phone.class);
@@ -69,7 +69,7 @@ public class PhoneServiceImpl implements PhoneService {
             Phone phoneToDelete = optionalPhone.get();
             phoneRepository.delete(phoneToDelete);
         } else {
-            throw new NotFoundExceptionPhone("Phone not found in database with id="+id);
+            throw new PhoneNotFoundException("Phone not found in database with id="+id);
         }
     }
 }

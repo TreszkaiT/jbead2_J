@@ -2,7 +2,7 @@ package com.tt.jbead.services.impl;
 
 import com.tt.jbead.domain.dtos.CityDTO;
 import com.tt.jbead.domain.entities.City;
-import com.tt.jbead.exceptions.NotFoundExceptionCity;
+import com.tt.jbead.exceptions.notfound.CityNotFoundException;
 import com.tt.jbead.repositories.CityRepository;
 import com.tt.jbead.services.CityService;
 import org.modelmapper.ModelMapper;
@@ -55,7 +55,7 @@ public class CityServiceImpl implements CityService {
         Optional<City> optionalCity = cityRepository.findById(id);
 
         if(optionalCity.isEmpty()){
-            throw new NotFoundExceptionCity("City not found in database with id: "+id);
+            throw new CityNotFoundException("City not found in database with id: "+id);
         }
 
         City cityToUpdate = modelMapper.map(cityDTO, City.class);
@@ -71,7 +71,7 @@ public class CityServiceImpl implements CityService {
             City cityToDelete = optionalCity.get();
             cityRepository.delete(cityToDelete);
         } else {
-            throw new NotFoundExceptionCity("City not found in database with id: "+id);
+            throw new CityNotFoundException("City not found in database with id: "+id);
         }
 
     }

@@ -2,7 +2,7 @@ package com.tt.jbead.services.impl;
 
 import com.tt.jbead.domain.entities.SocialMedia;
 import com.tt.jbead.domain.dtos.SocialMediaDTO;
-import com.tt.jbead.exceptions.NotFoundExceptionSocialMedia;
+import com.tt.jbead.exceptions.notfound.SocialMediaNotFoundException;
 import com.tt.jbead.repositories.SocialMediaRepository;
 import com.tt.jbead.services.SocialMediaService;
 import org.modelmapper.ModelMapper;
@@ -53,7 +53,7 @@ public class SocialMediaServiceImpl implements SocialMediaService {
         Optional<SocialMedia> optionalSocialMedia = socialMediaRepository.findById(id);
 
         if(optionalSocialMedia.isEmpty()){
-            throw new NotFoundExceptionSocialMedia("SocialMedia not found in database with id="+id);
+            throw new SocialMediaNotFoundException("SocialMedia not found in database with id="+id);
         }
 
         SocialMedia socialMediaToUpdate = modelMapper.map(socialMediaDTO, SocialMedia.class);
@@ -69,7 +69,7 @@ public class SocialMediaServiceImpl implements SocialMediaService {
             SocialMedia socialMediaToDelete = optionalSocialMedia.get();
             socialMediaRepository.delete(socialMediaToDelete);
         } else {
-            throw new NotFoundExceptionSocialMedia("SocialMedia not found in database with id="+id);
+            throw new SocialMediaNotFoundException("SocialMedia not found in database with id="+id);
         }
     }
 }

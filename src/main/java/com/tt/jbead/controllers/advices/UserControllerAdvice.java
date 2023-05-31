@@ -2,7 +2,7 @@ package com.tt.jbead.controllers.advices;
 
 import com.tt.jbead.controllers.UserController;
 import com.tt.jbead.exceptions.InvalidEntityException;
-import com.tt.jbead.exceptions.NotFoundExceptionCity;
+import com.tt.jbead.exceptions.notfound.CityNotFoundException;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice(assignableTypes = UserController.class)          // (assignableTypes = MovieController.class) :: e nélkül az összes Controller fájlért ő felel
 public class UserControllerAdvice {
 
-    @ExceptionHandler(value = NotFoundExceptionCity.class)                                                 // Ebből tudja, hogy Exceptiont kell kezelnie;;  ő csak ezért felelős : MovieNotFoundException.class
+    @ExceptionHandler(value = CityNotFoundException.class)                                                 // Ebből tudja, hogy Exceptiont kell kezelnie;;  ő csak ezért felelős : MovieNotFoundException.class
     public ResponseEntity<Void> handleCityNotFoundException(){
         return ResponseEntity.badRequest().build();                                                         // 404-es HTTP status code;   build() : üres response body-val
     }

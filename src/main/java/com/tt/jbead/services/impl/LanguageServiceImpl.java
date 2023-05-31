@@ -2,7 +2,7 @@ package com.tt.jbead.services.impl;
 
 import com.tt.jbead.domain.entities.Language;
 import com.tt.jbead.domain.dtos.LanguageDTO;
-import com.tt.jbead.exceptions.NotFoundExceptionLanguage;
+import com.tt.jbead.exceptions.notfound.LanguageNotFoundException;
 import com.tt.jbead.repositories.LanguageRepository;
 import com.tt.jbead.services.LanguageService;
 import org.modelmapper.ModelMapper;
@@ -53,7 +53,7 @@ public class LanguageServiceImpl implements LanguageService {
         Optional<Language> optionalLanguage = languageRepository.findById(id);
 
         if(optionalLanguage.isEmpty()){
-            throw new NotFoundExceptionLanguage("Language not found in database with id="+id);
+            throw new LanguageNotFoundException("Language not found in database with id="+id);
         }
 
         Language languageToUpdate = modelMapper.map(languageDTO, Language.class);
@@ -69,7 +69,7 @@ public class LanguageServiceImpl implements LanguageService {
             Language languageToDelete = optionalLanguage.get();
             languageRepository.delete(languageToDelete);
         } else {
-            throw new NotFoundExceptionLanguage("Language not found in database with id="+id);
+            throw new LanguageNotFoundException("Language not found in database with id="+id);
         }
     }
 }

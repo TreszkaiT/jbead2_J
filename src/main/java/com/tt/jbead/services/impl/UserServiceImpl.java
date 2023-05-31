@@ -1,9 +1,8 @@
 package com.tt.jbead.services.impl;
 
-import com.tt.jbead.domain.dtos.CityDTO;
 import com.tt.jbead.domain.dtos.UserDTO;
 import com.tt.jbead.domain.entities.User;
-import com.tt.jbead.exceptions.NotFoundExceptionUser;
+import com.tt.jbead.exceptions.notfound.UserNotFoundException;
 import com.tt.jbead.repositories.UserRepository;
 import com.tt.jbead.services.UserService;
 import org.modelmapper.ModelMapper;
@@ -76,7 +75,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> optionalUser = userRepository.findById(id);
 
         if(optionalUser.isEmpty()){
-            throw new NotFoundExceptionUser("User not found in database with id= "+id);
+            throw new UserNotFoundException("User not found in database with id= "+id);
         }
 
         User userToUpdate = modelMapper.map(userDTO, User.class);
@@ -89,7 +88,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> optionalUser = userRepository.findById(id);
 
         if(optionalUser.isEmpty()){
-            throw new NotFoundExceptionUser("User not found in database with id= "+id);
+            throw new UserNotFoundException("User not found in database with id= "+id);
         }
 
         User userToDelete = optionalUser.get();

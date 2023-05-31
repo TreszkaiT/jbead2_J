@@ -2,7 +2,7 @@ package com.tt.jbead.services.impl;
 
 import com.tt.jbead.domain.entities.Study;
 import com.tt.jbead.domain.dtos.StudyDTO;
-import com.tt.jbead.exceptions.NotFoundExceptionStudy;
+import com.tt.jbead.exceptions.notfound.StudyNotFoundException;
 import com.tt.jbead.repositories.StudyRepository;
 import com.tt.jbead.services.StudyService;
 import org.modelmapper.ModelMapper;
@@ -53,7 +53,7 @@ public class StudyServiceImpl implements StudyService {
         Optional<Study> optionalStudy = studyRepository.findById(id);
 
         if(optionalStudy.isEmpty()){
-            throw new NotFoundExceptionStudy("Study not found in database with id="+id);
+            throw new StudyNotFoundException("Study not found in database with id="+id);
         }
 
         Study studyToUpdate = modelMapper.map(studyDTO, Study.class);
@@ -69,7 +69,7 @@ public class StudyServiceImpl implements StudyService {
             Study studyToDelete = optionalStudy.get();
             studyRepository.delete(studyToDelete);
         } else {
-            throw new NotFoundExceptionStudy("Study not found in database with id="+id);
+            throw new StudyNotFoundException("Study not found in database with id="+id);
         }
     }
 }

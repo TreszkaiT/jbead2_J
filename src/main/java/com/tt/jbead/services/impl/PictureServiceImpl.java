@@ -2,7 +2,7 @@ package com.tt.jbead.services.impl;
 
 import com.tt.jbead.domain.entities.Picture;
 import com.tt.jbead.domain.dtos.PictureDTO;
-import com.tt.jbead.exceptions.NotFoundExceptionPicture;
+import com.tt.jbead.exceptions.notfound.PictureNotFoundException;
 import com.tt.jbead.repositories.PictureRepository;
 import com.tt.jbead.services.PictureService;
 import org.modelmapper.ModelMapper;
@@ -53,7 +53,7 @@ public class PictureServiceImpl implements PictureService {
         Optional<Picture> optionalPicture = pictureRepository.findById(id);
 
         if(optionalPicture.isEmpty()){
-            throw new NotFoundExceptionPicture("Picture not found in database with id="+id);
+            throw new PictureNotFoundException("Picture not found in database with id="+id);
         }
 
         Picture pictureToUpdate = modelMapper.map(pictureDTO, Picture.class);
@@ -69,7 +69,7 @@ public class PictureServiceImpl implements PictureService {
             Picture pictureToDelete = optionalPicture.get();
             pictureRepository.delete(pictureToDelete);
         } else {
-            throw new NotFoundExceptionPicture("Picture not found in database with id="+id);
+            throw new PictureNotFoundException("Picture not found in database with id="+id);
         }
     }
 }
