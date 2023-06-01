@@ -27,7 +27,7 @@ public class UserDTO {
 
     private LocalDate bornDate;
 
-    private String phone = "";
+//    private String phone = "";
 
     private String address;
 

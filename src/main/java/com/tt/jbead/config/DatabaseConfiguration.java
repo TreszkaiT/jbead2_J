@@ -8,6 +8,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Component
@@ -61,6 +62,8 @@ public class DatabaseConfiguration {
 
         MessageApp messageApp = MessageApp.builder().name("Messenger").build();
         messageAppRepository.save(messageApp);
+        MessageApp messageApp2 = MessageApp.builder().name("Skype").build();
+        messageAppRepository.save(messageApp2);
 
         OtherSkill otherSkill = OtherSkill.builder().name("Jogosítvány").level("B").build();
         otherSkillRepository.save(otherSkill);
@@ -72,6 +75,8 @@ public class DatabaseConfiguration {
         studyRepository.save(study);
 
         User user = User.builder().id(1).email("kiss.geza@company.com").password("a").firstName("Kiss Géza").theme("kb-dark-theme").build();
+        user.setMessageApps(List.of(messageApp));
+//        user.setLanguages(List.of(language));
         userRepository.save(user);
     }
 }

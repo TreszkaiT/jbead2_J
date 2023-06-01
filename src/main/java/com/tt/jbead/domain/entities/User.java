@@ -44,8 +44,8 @@ public class User {
     private LocalDate bornDate;
 
     //@NotEmpty
-    @Column(name = "PERS_PHONE")
-    private String phone = "";
+//    @Column(name = "PERS_PHONE")
+//    private String phone = "";
 
     //@NotEmpty
     @Column(name = "PERS_ADDRESS")
