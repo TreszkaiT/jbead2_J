@@ -2,7 +2,6 @@ package com.tt.jbead.domain.entities;
 
 import com.tt.jbead.domain.enums.Gender;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -72,7 +71,7 @@ public class User {
     @JoinTable(name = "LANGUAGE_PERSON", joinColumns = {@JoinColumn(name = "person_id")}, inverseJoinColumns = {@JoinColumn(name = "language_id")})
     private List<Language> languages;
     @ManyToMany
-    private List<SocialMedia> socialMedia;
+    private List<SocialMedia> socialMedias;
     @ManyToMany
     private List<MessageApp> messageApps;
     @ManyToMany

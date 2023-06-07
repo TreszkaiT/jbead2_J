@@ -44,7 +44,7 @@ public class UserDTO {
 
     // Kapocsolótábla
     private List<LanguageDTO> languages;
-    private List<SocialMediaDTO> socialMedia;
+    private List<SocialMediaDTO> socialMedias;
     private List<MessageAppDTO> messageApps;
     private List<StudyDTO> studies;
     private List<ProofExperienceDTO> proofExperiences;

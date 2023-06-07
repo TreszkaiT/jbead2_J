@@ -139,6 +139,50 @@
         <!--        </dependency>-->
 
 
+        <!--        ezt a Tokenek generálására használ a háttérben a program. -->
+        <!--        Ez csak Java 1,8-nál újabbaknál kell, mert a régieknél még benne volt-->
+        <!--        /* JAXB-API:-->
+        <!--        * Originally it was part of java until Java 9.-->
+        <!--        * With Java 8 you dont have to add to dependencies.-->
+        <!--        * It is a library that JJWT is dependent on.-->
+        <!--        * It is used in the process of generating the tokens. */-->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        <!--        /* JJWT: NECESSARY LIBRARY TO GENERATE WEB TOKENS */-->
+        <!--        A web tokenek kezelésére -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>0.11.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>0.11.5</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>0.11.5</version>
+            <scope>runtime</scope>
+        </dependency>
+<!--        UserDetailsService, AuthenticationManagerBuilder, AuthenticationManager Security beépített metódusok miatt-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+        </dependency>
+<!--org.springframework.security.web.authentication. metódusai miatt:  UsernamePasswordAuthenticationFilter, SecurityFilterChain,  miatt kell -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
 
 
         <!--		test: adatok tesztelésére  -->
