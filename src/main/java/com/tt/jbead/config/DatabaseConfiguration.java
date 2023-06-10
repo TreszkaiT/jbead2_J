@@ -77,6 +77,7 @@ public class DatabaseConfiguration {
         User user = User.builder().id(1).email("kiss.geza@company.com").password("a").firstName("Kiss Géza").theme("kb-dark-theme").build();
         user.setMessageApps(List.of(messageApp));
 //        user.setLanguages(List.of(language));
+        user.setPhones(List.of(phone));
         userRepository.save(user);
     }
 }
