@@ -3,9 +3,11 @@ package com.tt.jbead.security.login.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +27,9 @@ public class JwtUtil {
     /**
      * SECRET USED FOR JWT GENERATION
      */
-    private final String SECRET_KEY = "something h4rDer plz?!?!:D";                         // solting: azaz a token generálásához/kódolásához használja.  Biztonságos, ha minél bonyolultabb ez a kulcs Egyszer kell csak megadni, utána ne változtasd meg sosem.
+    //private final String SECRET_KEY = "something4rDerplzDsdfsadfdsaadsdfadfdafdssdfsf";                         // salting: azaz a token generálásához/kódolásához használja.  Biztonságos, ha minél bonyolultabb ez a kulcs Egyszer kell csak megadni, utána ne változtasd meg sosem.
+    private final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+
 
     public String extractUsername(String token) {                                           // tokenben lévő felhasználónév
         return extractClaim(token, Claims::getSubject);
@@ -45,7 +49,11 @@ public class JwtUtil {
         return claimsResolver.apply(claims);
     }
     private Claims extractAllClaims(String token) {
-        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+        return Jwts.parserBuilder()
+                .setSigningKey(SECRET_KEY)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     private Boolean isTokenExpired(String token) {                                          // lejárt-e a token v. sem
@@ -63,7 +71,7 @@ public class JwtUtil {
                 .setSubject(subject)                                                        // eu a Username, az egyel felette lévő generateToken() return 2. paramétere
                 .setIssuedAt(new Date(System.currentTimeMillis()))                              // token létrejötte
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))      // meddig érvényes  (jelenlegi 1000 ms *... = 10 óra összesen)
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();                      // kódolás milyen legyen hozzá
+                .signWith(SECRET_KEY).compact();                      // kódolás milyen legyen hozzá
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {

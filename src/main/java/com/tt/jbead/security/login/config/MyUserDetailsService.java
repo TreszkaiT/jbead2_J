@@ -16,24 +16,24 @@ import java.util.Optional;
  */
 @Service
 public class MyUserDetailsService implements UserDetailsService {
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        return new User("foo", "foo", new ArrayList<>());
-//    }
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return new User("foo", "foo", new ArrayList<>());
+    }
 
     @Autowired
     private UserRepository userRepository;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> userEntity = userRepository.findByUsername(username);
-
-        if (userEntity.isPresent()) {
-            return new AppUserDetails(userEntity.get());
-        }
-
-        throw new UsernameNotFoundException("Not good mate!");
-    }
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        Optional<User> userEntity = userRepository.findByUsername(username);
+//
+//        if (userEntity.isPresent()) {
+//            return new AppUserDetails(userEntity.get());
+//        }
+//
+//        throw new UsernameNotFoundException("Not good mate!");
+//    }
 
 }
 
